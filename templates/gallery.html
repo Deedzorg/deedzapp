@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Gallery</title>
+    <style>
+        .zoom-lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .zoom-lightbox.hidden { display: none; }
+        .zoom-toolbar {
+            position: absolute; top: 20px; right: 40px;
+        }
+        #zoomed-img {
+            max-width: 80vw; max-height: 80vh;
+            transition: transform 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a> | 
+        <a href="/about">About</a> | 
+        <a href="/gallery">Gallery</a>
+    </nav>
+
+    <h1>Gallery</h1>
+    <div class="gallery">
+        <img src="/static/images/pic1.jpg" alt="Pic1" width="200" class="zoomable">
+        <img src="/static/images/pic2.jpg" alt="Pic2" width="200" class="zoomable">
+        <img src="/static/images/pic3.jpg" alt="Pic3" width="200" class="zoomable">
+    </div>
+
+    <!-- Lightbox Overlay -->
+    <div id="zoom-lightbox" class="zoom-lightbox hidden">
+      <div class="zoom-toolbar">
+        <button onclick="zoomIn()">+</button>
+        <button onclick="zoomOut()">−</button>
+        <button onclick="closeZoom()">✖</button>
+      </div>
+      <img id="zoomed-img" src="" alt="Zoomed Image">
+    </div>
+
+    <script>
+    let zoomLevel = 1;
+    const lightbox = document.getElementById('zoom-lightbox');
+    const zoomedImg = document.getElementById('zoomed-img');
+
+    document.querySelectorAll('.zoomable').forEach(img => {
+        img.addEventListener('click', function() {
+            zoomedImg.src = this.src;
+            zoomLevel = 1;
+            zoomedImg.style.transform = 'scale(1)';
+            lightbox.classList.remove('hidden');
+        });
+    });
+
+    function zoomIn() {
+        zoomLevel += 0.2;
+        zoomedImg.style.transform = `scale(${zoomLevel})`;
+    }
+    function zoomOut() {
+        zoomLevel = Math.max(0.2, zoomLevel - 0.2);
+        zoomedImg.style.transform = `scale(${zoomLevel})`;
+    }
+    function closeZoom() {
+        lightbox.classList.add('hidden');
+        zoomedImg.src = '';
+    }
+    </script>
+</body>
+</html>
