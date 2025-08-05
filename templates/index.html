@@ -5,14 +5,33 @@
     <title>Home</title>
 </head>
 <body>
-    <nav>
-        <a href="/">Home</a> | 
-        <a href="/about">About</a> | 
-        <a href="/gallery">Gallery</a>
-    </nav>
+    <header class="site-header">
+        <div class="navbar container">
+            <div class="logo">DeedzApp</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/" class="active">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/gallery">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <h1>Welcome</h1>
-    <p>This is the home page.</p>
-    <img src="/static/images/pic1.jpg" alt="Example" width="400">
+    <main class="container">
+        <section class="hero">
+            <h1>Welcome to DeedzApp!</h1>
+            <p>Your one-stop platform for streaming, sharing, and creating.</p>
+            <a href="/about" class="button">Learn More</a>
+        </section>
+
+        <section class="featured-image">
+            <img src="/static/images/pic1.jpg" alt="Example" width="100%" class="zoomable">
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        &copy; 2025 DeedzApp. All rights reserved.
+    </footer>
 </body>
 </html>
