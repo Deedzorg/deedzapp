@@ -1,0 +1,28 @@
+logLevel: debug
+logDestinations: [stdout]
+
+# RTMP ingest
+rtmp: yes
+rtmpAddress: ":1935"
+
+# HLS playback
+hls: yes
+hlsAddress: ":8888"
+hlsAllowOrigin: "*"
+hlsVariant: lowLatency
+hlsSegmentCount: 7
+hlsSegmentDuration: 1s
+hlsPartDuration: 200ms
+
+# WebRTC
+webrtc: yes
+webrtcAddress: ":8889"
+webrtcEncryption: no
+webrtcAllowOrigin: "*"
+
+# Dynamic Path handler (e.g., rtmp://host/live/mykey)
+paths:
+  ~^live/.+:
+    source: publisher
+    overridePublisher: yes
+ 

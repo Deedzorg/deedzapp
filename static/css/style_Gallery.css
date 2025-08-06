@@ -1,0 +1,95 @@
+/* Base resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Site nav */
+nav {
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+nav a {
+  color: #555;
+  text-decoration: none;
+  margin: 0 0.75rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+nav a:hover,
+nav a.active {
+  color: #111;
+}
+
+/* Gallery grid */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+/* Thumbnails */
+.zoomable {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.zoomable:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Lightbox overlay */
+.zoom-lightbox {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.zoom-lightbox.hidden {
+  display: none;
+}
+
+/* Zoomed image */
+#zoomed-img {
+  max-width: 80vw;
+  max-height: 80vh;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+/* Toolbar */
+.zoom-toolbar {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+.zoom-toolbar button {
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 4px;
+  margin: 0 0.25rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.zoom-toolbar button:hover {
+  background: rgba(255,255,255,1);
+}

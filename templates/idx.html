@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Stream</title>
+    <meta name="viewport" content="width=800">
+    <style>
+        body {
+            background: #16181a;
+            color: #fafafa;
+            font-family: system-ui, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 32px;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        .video-container {
+            margin: 32px auto;
+            max-width: 800px;
+            background: #23252b;
+            border-radius: 18px;
+            box-shadow: 0 6px 32px #000a;
+            padding: 24px;
+        }
+        video {
+            width: 100%;
+            height: 450px;
+            border-radius: 12px;
+            background: #000;
+        }
+        .status {
+            margin: 18px auto 0 auto;
+            font-size: 1.1em;
+            color: #90ee90;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Stream</h1>
+    <div class="video-container">
+        <video id="video" controls poster="" playsinline></video>
+        <div class="status" id="status">Connecting…</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        const video = document.getElementById('video');
+        const status = document.getElementById('status');
+        const hlsUrl = 'https://deedzapp.fly.dev/hls/test.m3u8';
+
+        function setStatus(msg, color = "#90ee90") {
+            status.textContent = msg;
+            status.style.color = color;
+        }
+
+        if (Hls.isSupported()) {
+            const hls = new Hls({ 
+                // You can tune these for lower latency if needed
+                liveSyncDuration: 2,
+                maxLiveSyncPlaybackRate: 1.2,
+                maxBufferLength: 5,
+            });
+            
+            hls.loadSource(hlsUrl);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+                setStatus("🔴 Live stream connected!");
+            });
+            hls.on(Hls.Events.ERROR, function(event, data) {
+                setStatus("Stream error: " + data.details, "#ff5050");
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            // Safari or iOS
+            video.src = hlsUrl;
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+                setStatus("🔴 Live stream connected!");
+            });
+            video.addEventListener('error', function() {
+                setStatus("Stream error: Could not load stream.", "#ff5050");
+            });
+        } else {
+            setStatus("HLS not supported in this browser.", "#ff5050");
+        }
+    </script>
+</body>
+</html>

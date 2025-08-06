@@ -5,8 +5,9 @@ primary_region = "iad"
   dockerfile = "Dockerfile"
 
 [env]
-  PORT = "8080"
+  PORT = "9090"
 
+# HTTP & HTTPS → nginx on port 8080
 [[services]]
   internal_port = 8080
   protocol = "tcp"
@@ -18,3 +19,19 @@ primary_region = "iad"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
+
+  [[services.http_checks]]
+    interval = "10s"
+    timeout = "3s"
+    method = "GET"
+    path = "/health"
+    protocol = "http"
+
+# RTMP → nginx RTMP listener on port 1935
+[[services]]
+  internal_port = 1935
+  protocol = "tcp"
+  proxy_protocol = false
+
+  [[services.ports]]
+    port = 1935
